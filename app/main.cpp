@@ -13,10 +13,10 @@ int main()
 
 			double result = calc(operand_a, operation, operand_b);
 
-			std::format("{} {} {} = {}", operand_a, operation, operand_b, result);
+			std::cout << std::format("{} {} {} = {}", operand_a, operation, operand_b, result) << std::endl;
 		}
 		catch (calculation_error& ex) {
-			std::format("Calculation error ocurred -> {}", ex.what());
+			std::cout << std::format("Calculation error occurred -> {}", ex.what()) << std::endl;
 			break;
 		}
 	}

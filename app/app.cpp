@@ -5,17 +5,17 @@
 namespace vsite::oop::v8
 {
 	std::string not_number::what() const  {
-		return "Operand is not a number.";
+		return "Not a number.";
 	}
 
 
 	std::string not_operator::what() const {
-		return "Element is not an operator.";
+		return "Invalid operation.";
 	}
 
 
 	std::string divide_zero::what() const {
-		return "Unable to divide with zero.";
+		return "Divide by zero.";
 	}
 
 
@@ -32,39 +32,35 @@ namespace vsite::oop::v8
 
 
 	char input_op(std::istream& input) {
-		std::string operation;
-		std::array<char, 4> supported_operators{ '+', '-', '*', '/' };
-
+		char operator_;
+		input >> operator_;
+		
 		if (
-			!(input >> operation) ||
-			!operation.size() ||
-			operation.find_first_not_of(operation[0]) != std::string::npos ||  // If any char in input is different than others we know its not valid per test line 58
-			std::find(supported_operators.begin(), supported_operators.end(), operation[0]) == supported_operators.end()  // if char is not in supported operators
-		) {
+			operator_ != '+' &&
+			operator_ != '-' &&
+			operator_ != '*' &&
+			operator_ != '/') {
 			throw not_operator();
 		}
 
-		return operation[0];
-
+		return operator_;
 	}
 
 
 	double calc(int a, char op, int b) {
 
-		double double_a = a;
-
 		switch (op) {
 		case '+':
-			return double_a + b;
+			return a + b;
 		case '-':
-			return double_a - b;
+			return a - b;
 		case '*':
-			return double_a * b;
+			return a * b;
 		case '/':
 			if (!b) {
 				throw divide_zero();
 			}
-			return double_a / b;
+			return static_cast<double>(a) / b;
 		}
 	}
 }
